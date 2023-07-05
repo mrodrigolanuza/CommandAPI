@@ -16,3 +16,12 @@ API that store command-line snippets (e.g. dotnet new web -n &lt;project name>)
 | PATCH  | /api/commands/{Id}   | Update (Partial)| Update part of a single resource (by Id)    |
 | DELETE | /api/commands/{Id}   | Delete          | Delete a single resource (by Id)            |
 
+## Technologies
+- Docker
+- PostgreSQL
+- DBeaver
+- .NET Core
+
+## References
+- [Les Jackson YouTube Channel](https://www.youtube.com/@binarythistle/playlists) 
+- [Les Jackson Blog](https://dotnetplaybook.com/)
