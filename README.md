@@ -25,3 +25,6 @@ API for storing command-line snippets (e.g. dotnet new web -n &lt;project name>)
 ## References
 - [Les Jackson YouTube Channel](https://www.youtube.com/@binarythistle/playlists) 
 - [Les Jackson Blog](https://dotnetplaybook.com/)
+
+## API Application Architecture
+![API Application Architecture](images/api-application-architecture.png)
