@@ -3,7 +3,7 @@
 ## Description
 API for storing command-line snippets (e.g. dotnet new web -n &lt;project name>)
 
->**NOTE**: Based on the book [The Complete ASP.NET Core 3 API Tutorial](https://www.amazon.com/stores/Les-Jackson/author/B084L9B8CB?ref=ap_rdr&store_ref=ap_rdr&isDramIntegrated=true&shoppingPortalEnabled=true)
+>💁 **NOTE**: Based on the book [The Complete ASP.NET Core 3 API Tutorial](https://www.amazon.com/stores/Les-Jackson/author/B084L9B8CB?ref=ap_rdr&store_ref=ap_rdr&isDramIntegrated=true&shoppingPortalEnabled=true)
 
 ## Endpoints
 
