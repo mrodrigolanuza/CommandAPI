@@ -28,12 +28,23 @@ namespace CommandAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<CommandContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("PostgreSqlConnection"))
+                options.UseNpgsql(GetPostgreSqlConnectionstringFromSecretsJsonFile())
             );
 
             services.AddControllers();
             services.AddScoped<ICommandAPIRepo, SqlCommandAPIRepo>();
-            
+
+        }
+
+        //Method for reading Secrets.json. This is a file tied to each developer due to it's saved in local files system and
+        //it uses the GUID associated to the csproj file.
+        private string GetPostgreSqlConnectionstringFromSecretsJsonFile()
+        {
+            var builder = new NpgsqlConnectionStringBuilder();
+            builder.ConnectionString = Configuration.GetConnectionString("PostgreSqlConnection");
+            builder.Username = Configuration["UserID"];
+            builder.Password = Configuration["Password"];
+            return builder.ConnectionString;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
