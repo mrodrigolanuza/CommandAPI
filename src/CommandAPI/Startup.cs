@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
+using AutoMapper;
 
 namespace CommandAPI
 {
@@ -27,13 +28,19 @@ namespace CommandAPI
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //DBContext DB Provider
             services.AddDbContext<CommandContext>(options =>
                 options.UseNpgsql(GetPostgreSqlConnectionstringFromSecretsJsonFile())
             );
 
             services.AddControllers();
+            
+            //Repo service
             services.AddScoped<ICommandAPIRepo, SqlCommandAPIRepo>();
-
+            
+            //AutoMapper service. Public DTO <=> Domain Models Mapping
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            services.AddAutoMapper(assemblies);
         }
 
         //Method for reading Secrets.json. This is a file tied to each developer due to it's saved in local files system and
