@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using AutoMapper;
+using Newtonsoft.Json.Serialization;
 
 namespace CommandAPI
 {
@@ -33,7 +34,10 @@ namespace CommandAPI
                 options.UseNpgsql(GetPostgreSqlConnectionstringFromSecretsJsonFile())
             );
 
-            services.AddControllers();
+            //Controllers with Json binding (Patch Requests)
+            services.AddControllers().AddNewtonsoftJson(s => {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
             
             //Repo service
             services.AddScoped<ICommandAPIRepo, SqlCommandAPIRepo>();

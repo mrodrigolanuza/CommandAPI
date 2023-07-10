@@ -25,7 +25,7 @@ namespace CommandAPI.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("CommandLiine")
+                    b.Property<string>("CommandLine")
                         .IsRequired()
                         .HasColumnType("text");
 

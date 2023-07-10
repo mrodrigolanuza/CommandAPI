@@ -15,7 +15,7 @@ namespace CommandAPI.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     HowTo = table.Column<string>(maxLength: 250, nullable: false),
                     Platform = table.Column<string>(nullable: false),
-                    CommandLiine = table.Column<string>(nullable: false)
+                    CommandLine = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

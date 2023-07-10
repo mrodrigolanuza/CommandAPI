@@ -4,6 +4,7 @@ using AutoMapper;
 using CommandAPI.Data;
 using CommandAPI.DTOs;
 using CommandAPI.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommandAPI.Controllers
@@ -28,8 +29,7 @@ namespace CommandAPI.Controllers
             return Ok(mapper.Map<IEnumerable<CommandReadDTO>>(commandItems));
         }
 
-        [HttpGet]
-        [Route("{id}")]
+        [HttpGet("{id}", Name="GetCommandById")]
         public ActionResult<Command> GetCommandById(int id)
         {
             var command = repository.GetCommandById(id);
@@ -37,6 +37,51 @@ namespace CommandAPI.Controllers
                 return NotFound();
             
             return Ok(mapper.Map<CommandReadDTO>(command));
+        }
+
+        [HttpPost]
+        public ActionResult<CommandReadDTO> CreateCommand(CommandCreateDTO commandCreateDTO)
+        {
+            var commandModel = mapper.Map<Command>(commandCreateDTO);
+            repository.CreateCommand(commandModel);
+            repository.SaveChanges();
+            
+            var commandReadDTO = mapper.Map<CommandReadDTO>(commandModel);
+            var result = CreatedAtRoute(nameof(GetCommandById), new {Id = commandReadDTO.Id}, commandReadDTO);
+            return result;
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateCommand(int id, CommandUpdateDTO commandUpdateDTO)
+        {
+            var commandModelFromRepo = repository.GetCommandById(id);
+            if(commandModelFromRepo is null)
+                return NotFound();
+
+            mapper.Map(commandUpdateDTO, commandModelFromRepo);
+            repository.UpdateCommand(commandModelFromRepo);
+            repository.SaveChanges();
+            
+            return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public ActionResult PartialCommandUpdate(int id, JsonPatchDocument<CommandUpdateDTO> patchDoc)
+        {
+            var commandModelFromRepo = repository.GetCommandById(id);
+            if(commandModelFromRepo is null)
+                return NotFound();
+
+            var commandToPatch = mapper.Map<CommandUpdateDTO>(commandModelFromRepo);
+            patchDoc.ApplyTo(commandToPatch, ModelState);
+            
+            if(!TryValidateModel(commandToPatch))
+                return ValidationProblem(ModelState);
+            
+            mapper.Map(commandToPatch, commandModelFromRepo);
+            repository.UpdateCommand(commandModelFromRepo);
+            repository.SaveChanges();
+            return NoContent();
         }
     }    
 }
