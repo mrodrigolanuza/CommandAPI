@@ -30,7 +30,7 @@ namespace CommandAPI.Controllers
         }
 
         [HttpGet("{id}", Name="GetCommandById")]
-        public ActionResult<Command> GetCommandById(int id)
+        public ActionResult<CommandReadDTO> GetCommandById(int id)
         {
             var command = repository.GetCommandById(id);
             if(command is null)
