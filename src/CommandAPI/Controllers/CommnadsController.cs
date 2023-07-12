@@ -68,16 +68,21 @@ namespace CommandAPI.Controllers
         [HttpPatch("{id}")]
         public ActionResult PartialCommandUpdate(int id, JsonPatchDocument<CommandUpdateDTO> patchDoc)
         {
+            //JsonPatchDocument expected that applies to a CommandUpdateDTO >> patchDoc 
+
+            //Get actual DB info for the id
             var commandModelFromRepo = repository.GetCommandById(id);
             if(commandModelFromRepo is null)
                 return NotFound();
 
             var commandToPatch = mapper.Map<CommandUpdateDTO>(commandModelFromRepo);
-            patchDoc.ApplyTo(commandToPatch, ModelState);
             
+            //Validations with Data Annotations: Data received applied to existing Data 
+            patchDoc.ApplyTo(commandToPatch, ModelState);
             if(!TryValidateModel(commandToPatch))
                 return ValidationProblem(ModelState);
             
+            //Perform changes from commandToPatch to commandModelFromRepo
             mapper.Map(commandToPatch, commandModelFromRepo);
             repository.UpdateCommand(commandModelFromRepo);
             repository.SaveChanges();
