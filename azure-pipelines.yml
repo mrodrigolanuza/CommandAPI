@@ -2,8 +2,10 @@
 trigger:
 - main
 
-pool:
-  vmImage: ubuntu-latest
+pool: 
+   name: MiPCAgentPool
+   demands:
+    - agent.name -equals Agent-WIN-01
 
 variables:
   buildConfiguration: 'Release'
