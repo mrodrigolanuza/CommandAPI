@@ -15,11 +15,21 @@ variables:
 # 2.- Build solution
 steps:
 - task: NuGetCommand@2
+  displayName: 'dotnet restore'
   inputs:
     command: 'restore'
     restoreSolution: '**/*.sln'
     feedsToUse: 'select'
 - task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
   inputs:
     command: 'build'
     arguments: '--configuration $(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
+  inputs:
+    command: 'test'
+    projects: '**/*Test/*.csproj'
+    testRunTitle: 'xUNit Test Run'
+  
+    
