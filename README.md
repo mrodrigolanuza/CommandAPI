@@ -21,6 +21,13 @@ API for storing command-line snippets (e.g. dotnet new web -n &lt;project name>)
 - PostgreSQL
 - DBeaver
 - .NET Core
+- Visual Studio Code + Extensions
+  - C# (Microsoft)
+  - Docker (Microsoft)
+  - Insert GUID (Healt Stewart)
+  - Markdown All in One (Yu Zhang)
+  - WSL (Microsoft)
+  - Azure Pipelines (Microsoft)
 
 ## References
 - [Les Jackson YouTube Channel](https://www.youtube.com/@binarythistle/playlists) 
