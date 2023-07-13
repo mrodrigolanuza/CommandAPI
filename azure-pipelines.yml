@@ -2,6 +2,7 @@
 trigger:
 - main
 
+# Use Local Agent to perform the process
 pool: 
    name: MiPCAgentPool
    demands:
@@ -10,6 +11,8 @@ pool:
 variables:
   buildConfiguration: 'Release'
 
+# 1.- Restore dependencies (Nuget Packages)
+# 2.- Build solution
 steps:
 - task: NuGetCommand@2
   inputs:
